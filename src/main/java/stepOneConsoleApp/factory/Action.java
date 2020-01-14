@@ -1,6 +1,4 @@
-package stepOneConsoleApp.commands;
-
-import stepOneConsoleApp.Main;
+package stepOneConsoleApp.factory;
 
 import java.io.IOException;
 

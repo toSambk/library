@@ -1,4 +1,4 @@
-package stepOneConsoleApp.commands;
+package stepOneConsoleApp.factory;
 
 import stepOneConsoleApp.builders.PublisherBuilder;
 import stepOneConsoleApp.dao.PublisherList;
@@ -25,7 +25,7 @@ public class PublisherAction implements Action {
     public void addNew() throws IOException {
         System.out.println("---Введите название издательства---");
         String input = bufferedReader.readLine();
-        if (!publisherList.getPublishers().stream().anyMatch(x -> x.getName().equals(input))) {
+        if (publisherList.getPublishers().stream().noneMatch(x -> x.getName().equals(input))) {
             System.out.println("Добавление...");
             PublisherBuilder publisherBuilder = new PublisherBuilder().setName(input);
             publisherList.getPublishers().add(publisherBuilder.getResult());

@@ -1,4 +1,4 @@
-package stepOneConsoleApp.commands;
+package stepOneConsoleApp.factory;
 
 import stepOneConsoleApp.builders.AuthorBuilder;
 import stepOneConsoleApp.builders.BookBuilder;
@@ -55,7 +55,7 @@ public class BookAction implements Action {
 
         List<Author> authors = new ArrayList<>();
         for (String author : authorsNotParsed.split(" ")) {
-            if (!authorList.getAuthors().stream().anyMatch(x -> x.getName().equals(author))) {
+            if (authorList.getAuthors().stream().noneMatch(x -> x.getName().equals(author))) {
                 System.out.println("Автора " + author + " не существует. Добавляем...");
                 AuthorBuilder authorBuilder = new AuthorBuilder().setName(author);
                 Author result = authorBuilder.getResult();
@@ -71,7 +71,7 @@ public class BookAction implements Action {
         System.out.println("---Введите название издателя---");
         String publisher = bufferedReader.readLine();
         Publisher result;
-        if (!publisherList.getPublishers().stream().anyMatch(x -> x.getName().equals(publisher))) {
+        if (publisherList.getPublishers().stream().noneMatch(x -> x.getName().equals(publisher))) {
             System.out.println("Издателя " + publisher + " не существует. Добавляем...");
             PublisherBuilder publisherBuilder = new PublisherBuilder().setName(publisher);
             result = publisherBuilder.getResult();
