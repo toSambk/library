@@ -1,38 +1,16 @@
 package stepOneConsoleApp;
 
-import stepOneConsoleApp.builders.AuthorBuilder;
-import stepOneConsoleApp.builders.BookBuilder;
-import stepOneConsoleApp.builders.PublisherBuilder;
-import stepOneConsoleApp.commands.AuthorAction;
-import stepOneConsoleApp.commands.BookAction;
-import stepOneConsoleApp.commands.PublisherAction;
-import stepOneConsoleApp.dao.PublisherList;
 import stepOneConsoleApp.entities.Author;
 import stepOneConsoleApp.entities.Book;
 import stepOneConsoleApp.entities.Publisher;
-
+import stepOneConsoleApp.factory.ActionFactory;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.List;
 
 public class Main {
 
     private BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
-
-    private List<Book> booksCollection = new ArrayList<>();
-
-    private List<Author> authorsCollection = new ArrayList<>();
-
-    private List<Publisher> publishersCollection = new ArrayList<>();
-
-    private BookBuilder bookBuilder = new BookBuilder();
-
-    private AuthorBuilder authorBuilder = new AuthorBuilder();
-
-    private PublisherBuilder publisherBuilder = new PublisherBuilder();
-
 
     public static void main(String[] args) throws IOException {
         Main main = new Main();
@@ -43,39 +21,39 @@ public class Main {
 
             switch (input) {
                 case "1":
-                    new BookAction().getAll();
+                    new ActionFactory().getAction(Book.class).getAll();
                     break;
 
                 case "2":
-                    new AuthorAction().getAll();
+                    new ActionFactory().getAction(Author.class).getAll();
                     break;
 
                 case "3":
-                    new PublisherAction().getAll();
+                    new ActionFactory().getAction(Publisher.class).getAll();
                     break;
 
                 case "4":
-                    new BookAction().addNew();
+                    new ActionFactory().getAction(Book.class).addNew();
                     break;
 
                 case "5":
-                    new AuthorAction().addNew();
+                    new ActionFactory().getAction(Author.class).addNew();
                     break;
 
                 case "6":
-                    new PublisherAction().addNew();
+                    new ActionFactory().getAction(Publisher.class).addNew();
                     break;
 
                 case "7":
-                    new BookAction().delete();
+                    new ActionFactory().getAction(Book.class).delete();
                     break;
 
                 case "8":
-                    new AuthorAction().delete();
+                    new ActionFactory().getAction(Author.class).delete();
                     break;
 
                 case "9":
-                    new PublisherAction().delete();
+                    new ActionFactory().getAction(Publisher.class).delete();
                     break;
 
                 case "e":
@@ -86,7 +64,6 @@ public class Main {
                 default:
                     System.out.println("Неопределённая операция!");
                     break;
-
             }
         }
 

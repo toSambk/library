@@ -1,4 +1,4 @@
-package stepOneConsoleApp.commands;
+package stepOneConsoleApp.factory;
 
 import stepOneConsoleApp.builders.AuthorBuilder;
 import stepOneConsoleApp.dao.AuthorList;
@@ -26,7 +26,7 @@ public class AuthorAction implements Action{
 
         System.out.println("---Введите имя автора---");
         String input = bufferedReader.readLine();
-        if (!authorList.getAuthors().stream().anyMatch(x -> x.getName().equals(input))) {
+        if (authorList.getAuthors().stream().noneMatch(x -> x.getName().equals(input))) {
             System.out.println("Добавление...");
             AuthorBuilder authorBuilder = new AuthorBuilder().setName(input);
             authorList.addAuthor(authorBuilder.getResult());
