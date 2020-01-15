@@ -7,13 +7,13 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-public class PublisherAction implements Action {
+public class PublisherActionImpl implements IAction {
 
     private PublisherList publisherList = PublisherList.getInstance();
 
     private BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
 
-    public PublisherAction(){}
+    public PublisherActionImpl(){}
 
     @Override
     public void getAll() {
