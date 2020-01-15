@@ -7,7 +7,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-public class AuthorActionImpl implements IAction {
+public class AuthorActionImpl implements Action {
 
     private AuthorList authorList = AuthorList.getInstance();
 
