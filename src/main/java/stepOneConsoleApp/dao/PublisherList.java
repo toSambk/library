@@ -14,7 +14,6 @@ public class PublisherList {
 
     private PublisherList(){}
 
-
     public void deletePublisher(Publisher publisher) {
         publishers.remove(publisher);
     }
