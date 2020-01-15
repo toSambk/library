@@ -1,1 +1,1 @@
-Step 1 - Console application
+Step 1 - Console application used for improving basic programming skills such as working with patterns, DB, "must-have" frameworks and GIT
