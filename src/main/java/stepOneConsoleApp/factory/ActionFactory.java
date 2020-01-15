@@ -8,11 +8,11 @@ public class ActionFactory {
 
     public IAction getAction(Class clazz) {
 
-        if (clazz == Book.class) return new BookIAction();
+        if (clazz == Book.class) return new BookActionImpl();
 
         if (clazz == Author.class) return new AuthorActionImpl();
 
-        if (clazz == Publisher.class) return new PublisherIAction();
+        if (clazz == Publisher.class) return new PublisherActionImpl();
 
         return null;
 
