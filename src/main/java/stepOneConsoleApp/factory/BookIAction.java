@@ -16,7 +16,7 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BookAction implements Action {
+public class BookIAction implements IAction {
 
     private BookList bookList = BookList.getInstance();
 
@@ -26,7 +26,7 @@ public class BookAction implements Action {
 
     private BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
 
-    public BookAction() {
+    public BookIAction() {
     }
 
     @Override

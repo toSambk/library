@@ -2,7 +2,7 @@ package stepOneConsoleApp.factory;
 
 import java.io.IOException;
 
-public interface Action {
+public interface IAction {
 
     void getAll();
 
