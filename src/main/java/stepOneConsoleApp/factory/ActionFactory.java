@@ -6,7 +6,7 @@ import stepOneConsoleApp.entities.Publisher;
 
 public class ActionFactory {
 
-    public IAction getAction(Class clazz) {
+    public Action getAction(Class clazz) {
 
         if (clazz == Book.class) return new BookActionImpl();
 

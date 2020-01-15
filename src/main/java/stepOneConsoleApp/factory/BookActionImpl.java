@@ -16,7 +16,7 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BookActionImpl implements IAction {
+public class BookActionImpl implements Action {
 
     private BookList bookList = BookList.getInstance();
 

@@ -7,7 +7,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-public class PublisherActionImpl implements IAction {
+public class PublisherActionImpl implements Action {
 
     private PublisherList publisherList = PublisherList.getInstance();
 
