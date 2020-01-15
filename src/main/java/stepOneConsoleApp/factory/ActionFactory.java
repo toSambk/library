@@ -6,13 +6,13 @@ import stepOneConsoleApp.entities.Publisher;
 
 public class ActionFactory {
 
-    public Action getAction(Class clazz) {
+    public IAction getAction(Class clazz) {
 
-        if (clazz == Book.class) return new BookAction();
+        if (clazz == Book.class) return new BookIAction();
 
-        if (clazz == Author.class) return new AuthorAction();
+        if (clazz == Author.class) return new AuthorActionImpl();
 
-        if (clazz == Publisher.class) return new PublisherAction();
+        if (clazz == Publisher.class) return new PublisherIAction();
 
         return null;
 
