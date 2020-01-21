@@ -1,10 +1,9 @@
 package buildersTests;
 
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import stepOneConsoleApp.builders.AuthorBuilder;
-import stepOneConsoleApp.entities.Author;
+import consoleApp.builders.AuthorBuilder;
+import consoleApp.entities.Author;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;

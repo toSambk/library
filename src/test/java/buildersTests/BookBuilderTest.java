@@ -1,14 +1,13 @@
 package buildersTests;
 
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import stepOneConsoleApp.builders.AuthorBuilder;
-import stepOneConsoleApp.builders.BookBuilder;
-import stepOneConsoleApp.builders.PublisherBuilder;
-import stepOneConsoleApp.entities.Author;
-import stepOneConsoleApp.entities.Book;
-import stepOneConsoleApp.entities.Publisher;
+import consoleApp.builders.AuthorBuilder;
+import consoleApp.builders.BookBuilder;
+import consoleApp.builders.PublisherBuilder;
+import consoleApp.entities.Author;
+import consoleApp.entities.Book;
+import consoleApp.entities.Publisher;
 
 import java.util.Arrays;
 
