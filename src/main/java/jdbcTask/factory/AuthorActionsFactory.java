@@ -9,7 +9,8 @@ import jdbcTask.factory.getAllAction.GetAllAuthorsAction;
 import jdbcTask.factory.updateAction.UpdateAction;
 import jdbcTask.factory.updateAction.UpdateAuthorAction;
 
-public class AuthorActionsFactory implements AbstractEntityFactory {
+public class AuthorActionsFactory implements AbstractActionsFactory {
+
     @Override
     public AddNewAction getAddNewAction() {
         return new AddNewAuthorAction();

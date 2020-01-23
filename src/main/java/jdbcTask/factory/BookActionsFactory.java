@@ -9,7 +9,7 @@ import jdbcTask.factory.getAllAction.GetAllBooksAction;
 import jdbcTask.factory.updateAction.UpdateAction;
 import jdbcTask.factory.updateAction.UpdateBookAction;
 
-public class BookActionsFactory implements AbstractEntityFactory {
+public class BookActionsFactory implements AbstractActionsFactory {
 
     @Override
     public AddNewAction getAddNewAction() {

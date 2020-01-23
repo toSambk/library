@@ -5,7 +5,7 @@ import jdbcTask.factory.deleteAction.DeleteAction;
 import jdbcTask.factory.getAllAction.GetAllAction;
 import jdbcTask.factory.updateAction.UpdateAction;
 
-public interface AbstractEntityFactory {
+public interface AbstractActionsFactory {
 
     AddNewAction getAddNewAction();
 
