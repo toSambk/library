@@ -1,7 +1,11 @@
 package jdbcTask.factory.deleteAction;
 
-public interface DeleteAction {
+import jdbcTask.factory.Action;
 
-    void execute();
+import java.io.IOException;
+
+public interface DeleteAction extends Action {
+
+//    void execute() throws IOException;
 
 }

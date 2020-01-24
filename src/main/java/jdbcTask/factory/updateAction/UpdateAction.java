@@ -1,7 +1,11 @@
 package jdbcTask.factory.updateAction;
 
-public interface UpdateAction {
+import jdbcTask.factory.Action;
 
-    void execute();
+import java.io.IOException;
+
+public interface UpdateAction extends Action {
+
+//    void execute() throws IOException;
 
 }

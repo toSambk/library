@@ -12,7 +12,9 @@ public class GetAllPublishersAction implements GetAllAction {
 
     @Override
     public void execute() {
+
         System.out.println("---Список всех издательств---");
         publisherDao.getAll().forEach(x -> System.out.println("Имя издательства: " + x.getName()));
+
     }
 }

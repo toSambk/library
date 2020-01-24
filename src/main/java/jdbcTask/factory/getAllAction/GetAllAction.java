@@ -1,10 +1,9 @@
 package jdbcTask.factory.getAllAction;
 
-import java.sql.SQLException;
+import jdbcTask.factory.Action;
 
-public interface GetAllAction {
+public interface GetAllAction extends Action {
 
-
-    void execute() throws SQLException;
+//    void execute();
 
 }

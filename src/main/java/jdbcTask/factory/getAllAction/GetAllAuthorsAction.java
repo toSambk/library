@@ -12,7 +12,9 @@ public class GetAllAuthorsAction implements GetAllAction {
 
     @Override
     public void execute() {
+
         System.out.println("---Список всех авторов---");
         authorDao.getAll().forEach(x -> System.out.println("Имя автора: " + x.getName()));
+
     }
 }

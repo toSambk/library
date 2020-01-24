@@ -1,8 +1,8 @@
 package jdbcTask;
 
-import jdbcTask.factory.AuthorActionsFactory;
-import jdbcTask.factory.BookActionsFactory;
-import jdbcTask.factory.PublisherActionsFactory;
+import jdbcTask.entities.Author;
+import jdbcTask.entities.Book;
+import jdbcTask.entities.Publisher;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -23,6 +23,7 @@ public class App {
     public static void main(String[] args) throws IOException, SQLException {
 
         App app = new App();
+        AppConfig config = new AppConfig();
 
         try {
             Class.forName("com.mysql.cj.jdbc.Driver").getDeclaredConstructor().newInstance();
@@ -41,51 +42,51 @@ public class App {
 
             switch (input) {
                 case "1":
-                    new BookActionsFactory().getAllAction().execute();
+                    config.getAction(Book.class, ActionType.GET).execute();
                     break;
 
                 case "2":
-                    new AuthorActionsFactory().getAllAction().execute();
+                    config.getAction(Author.class, ActionType.GET).execute();
                     break;
 
                 case "3":
-                    new PublisherActionsFactory().getAllAction().execute();
+                    config.getAction(Publisher.class, ActionType.GET).execute();
                     break;
 
                 case "4":
-                    new BookActionsFactory().getAddNewAction().execute();
+                    config.getAction(Book.class, ActionType.ADD).execute();
                     break;
 
                 case "5":
-                    new AuthorActionsFactory().getAddNewAction().execute();
+                    config.getAction(Author.class, ActionType.ADD).execute();
                     break;
 
                 case "6":
-                    new PublisherActionsFactory().getAddNewAction().execute();
+                    config.getAction(Publisher.class, ActionType.ADD).execute();
                     break;
 
                 case "7":
-                    new BookActionsFactory().getDeleteAction().execute();
+                    config.getAction(Book.class, ActionType.DELETE).execute();
                     break;
 
                 case "8":
-                    new AuthorActionsFactory().getDeleteAction().execute();
+                    config.getAction(Author.class, ActionType.DELETE).execute();
                     break;
 
                 case "9":
-                    new PublisherActionsFactory().getDeleteAction().execute();
+                    config.getAction(Publisher.class, ActionType.DELETE).execute();
                     break;
 
                 case "10":
-                    new BookActionsFactory().getUpdateAction().execute();
+                    config.getAction(Book.class, ActionType.UPDATE).execute();
                     break;
 
                 case "11":
-                    new AuthorActionsFactory().getUpdateAction().execute();
+                    config.getAction(Author.class, ActionType.UPDATE).execute();
                     break;
 
                 case "12":
-                    new PublisherActionsFactory().getUpdateAction().execute();
+                    config.getAction(Publisher.class, ActionType.UPDATE).execute();
                     break;
 
                 case "e":
@@ -136,5 +137,6 @@ public class App {
         System.out.println("----------------------------");
         System.out.println("Завершение работы...");
     }
+
 
 }

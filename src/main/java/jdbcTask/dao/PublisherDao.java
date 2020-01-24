@@ -1,7 +1,9 @@
 package jdbcTask.dao;
 
 import jdbcTask.App;
+import jdbcTask.entities.Book;
 import jdbcTask.entities.Publisher;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -25,11 +27,38 @@ public class PublisherDao {
         return instance;
     }
 
-    public void addNew(String name) throws SQLException {
+    public Publisher addNew(String name) throws SQLException {
         PreparedStatement preparedStatement = connection
                 .prepareStatement("insert into publisher(name) values(?)");
         preparedStatement.setString(1, name);
         preparedStatement.executeUpdate();
+
+        PreparedStatement result = connection
+                .prepareStatement("select id from publisher where name = (?)");
+        result.setString(1, name);
+        ResultSet resultSet = result.executeQuery();
+        resultSet.next();
+        int id = resultSet.getInt("id");
+        return new Publisher(id, name);
+
+    }
+
+    public Publisher addNewWithBook(String name, Book book) throws SQLException {
+
+        PreparedStatement statement = connection
+                .prepareStatement("insert into publisher(name, book_id) values (?, ?)");
+        statement.setString(1, name);
+        statement.setInt(2, book.getId());
+        statement.executeUpdate();
+
+        PreparedStatement result = connection
+                .prepareStatement("select id from publisher where name = (?)");
+        result.setString(1, name);
+        ResultSet resultSet = result.executeQuery();
+        resultSet.next();
+        int id = resultSet.getInt("id");
+        return new Publisher(id, name, book);
+
     }
 
     public List<Publisher> getAll() {
@@ -48,4 +77,34 @@ public class PublisherDao {
 
         return publishers;
     }
+
+    public Publisher getPublisherByName(String name) throws SQLException {
+        PreparedStatement statement = connection
+                .prepareStatement("select *from publisher where name = (?)");
+        statement.setString(1, name);
+        ResultSet resultSet = statement.executeQuery();
+        resultSet.next();
+        int id = resultSet.getInt("id");
+        String curName = resultSet.getString("name");
+        return new Publisher(id, curName);
+
+    }
+
+    public void deleteByName(String name) throws SQLException {
+        PreparedStatement statement = connection
+                .prepareStatement("delete from publisher where name = (?)");
+        statement.setString(1, name);
+        statement.executeUpdate();
+    }
+
+    public void updatePublisherName(String oldName, String newName) throws SQLException {
+        PreparedStatement statement = connection
+                .prepareStatement("update publisher set name = (?) where name = (?)");
+        statement.setString(1, newName);
+        statement.setString(2, oldName);
+        statement.executeUpdate();
+        System.out.println("Добавлено.");
+    }
+
+
 }

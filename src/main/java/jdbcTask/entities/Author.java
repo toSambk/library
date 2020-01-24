@@ -9,7 +9,7 @@ public class Author {
 
     private String name;
 
-    private List<Integer> books = new ArrayList<>();
+    private List<Book> books = new ArrayList<>();
 
     public int getId() {
         return id;
@@ -23,7 +23,7 @@ public class Author {
         this.name = name;
     }
 
-    public List<Integer> getBooks() {
+    public List<Book> getBooks() {
         return books;
     }
 

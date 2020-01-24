@@ -6,6 +6,7 @@ import jdbcTask.entities.Book;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class AuthorBookDao {
@@ -26,11 +27,23 @@ public class AuthorBookDao {
 
     }
 
-    public void addDependency(int bookId, int authorId) throws SQLException {
+    public void addDependency(Book book, Author author) throws SQLException {
         PreparedStatement preparedStatement = connection.prepareStatement("insert into book_author(book_id, author_id) VALUES (?, ?)");
-        preparedStatement.setInt(1, bookId);
-        preparedStatement.setInt(2, authorId);
+        preparedStatement.setInt(1, book.getId());
+        preparedStatement.setInt(2, author.getId());
         preparedStatement.executeUpdate();
+    }
+
+    public boolean bookContainsAuthor(Book book, Author author) throws SQLException {
+
+        PreparedStatement statement = connection
+                .prepareStatement("select *from book_author where book_id = (?) and author_id = (?)");
+        statement.setInt(1, book.getId());
+        statement.setInt(2, author.getId());
+        ResultSet resultSet = statement.executeQuery();
+
+        return resultSet.next();
+
     }
 
 }
