@@ -28,48 +28,43 @@ public class PublisherDao {
     }
 
     public Publisher addNew(String name) throws SQLException {
-        PreparedStatement preparedStatement = connection
-                .prepareStatement("insert into publisher(name) values(?)");
-        preparedStatement.setString(1, name);
-        preparedStatement.executeUpdate();
-
-        PreparedStatement result = connection
-                .prepareStatement("select id from publisher where name = (?)");
-        result.setString(1, name);
-        ResultSet resultSet = result.executeQuery();
-        result.close();
-        resultSet.next();
-        int id = resultSet.getInt("id");
-        return new Publisher(id, name);
-
+        try (PreparedStatement preparedStatement = connection
+                .prepareStatement("insert into publisher(name) values(?)")) {
+            preparedStatement.setString(1, name);
+            preparedStatement.executeUpdate();
+        }
+        try (PreparedStatement result = connection
+                .prepareStatement("select id from publisher where name = (?)")) {
+            result.setString(1, name);
+            ResultSet resultSet = result.executeQuery();
+            resultSet.next();
+            int id = resultSet.getInt("id");
+            return new Publisher(id, name);
+        }
     }
 
     public Publisher addNewWithBook(String name, Book book) throws SQLException {
-
-        PreparedStatement statement = connection
-                .prepareStatement("insert into publisher(name, book_id) values (?, ?)");
-        statement.setString(1, name);
-        statement.setInt(2, book.getId());
-        statement.executeUpdate();
-        statement.close();
-
-        PreparedStatement result = connection
-                .prepareStatement("select id from publisher where name = (?)");
-        result.setString(1, name);
-        ResultSet resultSet = result.executeQuery();
-        result.close();
-        resultSet.next();
-        int id = resultSet.getInt("id");
-        return new Publisher(id, name, book);
+        try (PreparedStatement statement = connection
+                .prepareStatement("insert into publisher(name, book_id) values (?, ?)")) {
+            statement.setString(1, name);
+            statement.setInt(2, book.getId());
+            statement.executeUpdate();
+        }
+        try (PreparedStatement result = connection
+                .prepareStatement("select id from publisher where name = (?)")) {
+            result.setString(1, name);
+            ResultSet resultSet = result.executeQuery();
+            resultSet.next();
+            int id = resultSet.getInt("id");
+            return new Publisher(id, name, book);
+        }
 
     }
 
     public List<Publisher> getAll() {
         List<Publisher> publishers = new ArrayList<>();
-        try {
-            PreparedStatement preparedStatement = connection.prepareStatement("select *from publisher");
+        try (PreparedStatement preparedStatement = connection.prepareStatement("select *from publisher")) {
             ResultSet resultSet = preparedStatement.executeQuery();
-            preparedStatement.close();
             while (resultSet.next()) {
                 int publisherId = resultSet.getInt("id");
                 String publisherName = resultSet.getString("name");
@@ -78,39 +73,37 @@ public class PublisherDao {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
         return publishers;
     }
 
     public Publisher getPublisherByName(String name) throws SQLException {
-        PreparedStatement statement = connection
-                .prepareStatement("select *from publisher where name = (?)");
-        statement.setString(1, name);
-        ResultSet resultSet = statement.executeQuery();
-        statement.close();
-        resultSet.next();
-        int id = resultSet.getInt("id");
-        String curName = resultSet.getString("name");
-        return new Publisher(id, curName);
-
+        try (PreparedStatement statement = connection
+                .prepareStatement("select *from publisher where name = (?)")) {
+            statement.setString(1, name);
+            ResultSet resultSet = statement.executeQuery();
+            resultSet.next();
+            int id = resultSet.getInt("id");
+            String curName = resultSet.getString("name");
+            return new Publisher(id, curName);
+        }
     }
 
     public void deleteByName(String name) throws SQLException {
-        PreparedStatement statement = connection
-                .prepareStatement("delete from publisher where name = (?)");
-        statement.setString(1, name);
-        statement.executeUpdate();
-        statement.close();
+        try(PreparedStatement statement = connection
+                .prepareStatement("delete from publisher where name = (?)")) {
+            statement.setString(1, name);
+            statement.executeUpdate();
+        }
     }
 
     public void updatePublisherName(String oldName, String newName) throws SQLException {
-        PreparedStatement statement = connection
-                .prepareStatement("update publisher set name = (?) where name = (?)");
-        statement.setString(1, newName);
-        statement.setString(2, oldName);
-        statement.executeUpdate();
-        statement.close();
-        System.out.println("Добавлено.");
+        try (PreparedStatement statement = connection
+                .prepareStatement("update publisher set name = (?) where name = (?)")) {
+            statement.setString(1, newName);
+            statement.setString(2, oldName);
+            statement.executeUpdate();
+            System.out.println("Добавлено.");
+        }
     }
 
 

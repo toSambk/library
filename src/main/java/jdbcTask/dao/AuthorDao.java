@@ -29,10 +29,8 @@ public class AuthorDao {
 
     public List<Author> getAll() {
         List<Author> authors = new ArrayList<>();
-        try {
-            PreparedStatement preparedStatement = connection.prepareStatement("select *from author");
+        try(PreparedStatement preparedStatement = connection.prepareStatement("select *from author")) {
             ResultSet resultSet = preparedStatement.executeQuery();
-            preparedStatement.close();
             while (resultSet.next()) {
                 int authorId = resultSet.getInt("id");
                 String authorName = resultSet.getString("name");
@@ -41,58 +39,55 @@ public class AuthorDao {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
         return authors;
     }
 
     public Author addNew(String name) throws SQLException {
-        PreparedStatement preparedStatement = connection
-                .prepareStatement("insert into author(name) values(?)");
-        preparedStatement.setString(1, name);
-        preparedStatement.executeUpdate();
-        PreparedStatement result = connection.prepareStatement("select id from author where name = (?)");
-        result.setString(1, name);
-        ResultSet resultSet = result.executeQuery();
-        resultSet.next();
-        int id = resultSet.getInt("id");
-        preparedStatement.close();
-        return new Author(id, name);
-
+        try(PreparedStatement preparedStatement = connection
+                .prepareStatement("insert into author(name) values(?)")) {
+            preparedStatement.setString(1, name);
+            preparedStatement.executeUpdate();
+        }
+        try(PreparedStatement result = connection.prepareStatement("select id from author where name = (?)")) {
+            result.setString(1, name);
+            ResultSet resultSet = result.executeQuery();
+            resultSet.next();
+            int id = resultSet.getInt("id");
+            return new Author(id, name);
+        }
     }
 
     public Author getAuthorByName(String name) throws SQLException {
-        PreparedStatement preparedStatement = connection
-                .prepareStatement("select id from author where name = (?)");
-        preparedStatement.setString(1, name);
-        ResultSet resultSet = preparedStatement.executeQuery();
-        resultSet.next();
-        preparedStatement.close();
-        return new Author(resultSet.getInt("id"), name);
+        try(PreparedStatement preparedStatement = connection
+                .prepareStatement("select id from author where name = (?)")) {
+            preparedStatement.setString(1, name);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            resultSet.next();
+            return new Author(resultSet.getInt("id"), name);
+        }
     }
 
     public void deleteByName(String name) throws SQLException {
-
         Author author = getAuthorByName(name);
-
-        PreparedStatement preDel = connection
-                .prepareStatement("delete from book_author where author_id = (?)");
-        preDel.setInt(1, author.getId());
-        preDel.executeUpdate();
-
-        PreparedStatement statement = connection
-                .prepareStatement("delete from author where name = (?)");
-        statement.setString(1, name);
-        statement.executeUpdate();
-        statement.close();
+        try(PreparedStatement preDel = connection
+                .prepareStatement("delete from book_author where author_id = (?)")) {
+            preDel.setInt(1, author.getId());
+            preDel.executeUpdate();
+        }
+        try(PreparedStatement statement = connection
+                .prepareStatement("delete from author where name = (?)")) {
+            statement.setString(1, name);
+            statement.executeUpdate();
+        }
     }
 
     public void updateAuthorName(String oldName, String newName) throws SQLException {
-        PreparedStatement statement = connection
-                .prepareStatement("update author set name = (?) where name = (?)");
-        statement.setString(1, newName);
-        statement.setString(2, oldName);
-        statement.executeUpdate();
-        statement.close();
+        try(PreparedStatement statement = connection
+                .prepareStatement("update author set name = (?) where name = (?)")) {
+            statement.setString(1, newName);
+            statement.setString(2, oldName);
+            statement.executeUpdate();
+        }
         System.out.println("Добавлено.");
     }
 

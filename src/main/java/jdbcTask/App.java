@@ -1,5 +1,6 @@
 package jdbcTask;
 
+import com.mysql.cj.jdbc.MysqlConnectionPoolDataSource;
 import jdbcTask.entities.Author;
 import jdbcTask.entities.Book;
 import jdbcTask.entities.Publisher;
@@ -15,26 +16,29 @@ import java.sql.SQLException;
 public class App {
 
     private static Connection connection;
-    private final String url = "jdbc:mysql://localhost:3306/library";
-    private final String user = "root";
-    private final String password = "password";
+    private final static String url = "jdbc:mysql://localhost:3306/library";
+    private final static String user = "root";
+    private final static String password = "password";
     private BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
 
-    public static void main(String[] args) throws IOException, SQLException {
-
-        App app = new App();
-        AppConfig config = new AppConfig();
-
+    static {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver").getDeclaredConstructor().newInstance();
-            connection = DriverManager.getConnection(app.url, app.user, app.password);
-        } catch (SQLException e) {
-            System.out.println("Не удалось установить соединение с базой. Выключение...");
-            return;
-        } catch (InstantiationException | InvocationTargetException | NoSuchMethodException | IllegalAccessException | ClassNotFoundException e) {
+            connection = DriverManager.getConnection(url, user, password);
+        } catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException | ClassNotFoundException e) {
+            System.out.println("Ошибка драйвера базы.");
+            System.exit(-1);
             e.printStackTrace();
+        } catch (SQLException e) {
+            System.out.println("Ошибка установки соединения с базой.");
+            e.printStackTrace();
+            System.exit(-1);
         }
+    }
 
+    public static void main(String[] args) throws IOException {
+        App app = new App();
+        AppConfig config = new AppConfig();
         boolean inProgress = true;
         while (inProgress) {
             app.menu();
