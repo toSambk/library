@@ -32,6 +32,7 @@ public class AuthorBookDao {
         preparedStatement.setInt(1, book.getId());
         preparedStatement.setInt(2, author.getId());
         preparedStatement.executeUpdate();
+        preparedStatement.close();
     }
 
     public boolean bookContainsAuthor(Book book, Author author) throws SQLException {
@@ -41,6 +42,7 @@ public class AuthorBookDao {
         statement.setInt(1, book.getId());
         statement.setInt(2, author.getId());
         ResultSet resultSet = statement.executeQuery();
+        statement.close();
 
         return resultSet.next();
 

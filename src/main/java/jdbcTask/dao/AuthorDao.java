@@ -32,6 +32,7 @@ public class AuthorDao {
         try {
             PreparedStatement preparedStatement = connection.prepareStatement("select *from author");
             ResultSet resultSet = preparedStatement.executeQuery();
+            preparedStatement.close();
             while (resultSet.next()) {
                 int authorId = resultSet.getInt("id");
                 String authorName = resultSet.getString("name");
@@ -54,6 +55,7 @@ public class AuthorDao {
         ResultSet resultSet = result.executeQuery();
         resultSet.next();
         int id = resultSet.getInt("id");
+        preparedStatement.close();
         return new Author(id, name);
 
     }
@@ -64,6 +66,7 @@ public class AuthorDao {
         preparedStatement.setString(1, name);
         ResultSet resultSet = preparedStatement.executeQuery();
         resultSet.next();
+        preparedStatement.close();
         return new Author(resultSet.getInt("id"), name);
     }
 
@@ -80,6 +83,7 @@ public class AuthorDao {
                 .prepareStatement("delete from author where name = (?)");
         statement.setString(1, name);
         statement.executeUpdate();
+        statement.close();
     }
 
     public void updateAuthorName(String oldName, String newName) throws SQLException {
@@ -88,6 +92,7 @@ public class AuthorDao {
         statement.setString(1, newName);
         statement.setString(2, oldName);
         statement.executeUpdate();
+        statement.close();
         System.out.println("Добавлено.");
     }
 

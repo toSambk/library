@@ -47,8 +47,9 @@ public class BookDao {
                 .prepareStatement("insert into book(name) values(?)");
         preparedStatement.setString(1, name);
         preparedStatement.executeUpdate();
-
+        preparedStatement.close();
         PreparedStatement result = connection.prepareStatement("select id from book where name = (?)");
+        result.close();
         result.setString(1, name);
         ResultSet resultSet = result.executeQuery();
         resultSet.next();
@@ -61,6 +62,7 @@ public class BookDao {
         try {
             PreparedStatement preparedStatement = connection.prepareStatement("select *from book ");
             ResultSet resultSet = preparedStatement.executeQuery();
+            preparedStatement.close();
             while (resultSet.next()) {
                 int bookId = resultSet.getInt("id");
                 String bookName = resultSet.getString("name");
@@ -88,6 +90,7 @@ public class BookDao {
                         "from book_author left join author on book_author.author_id = author.id group by book_id) as magic\n" +
                         "on book.id = magic.book_id) as test left join publisher on test.id = publisher.book_id");
         ResultSet resultSet = preparedStatement.executeQuery();
+        preparedStatement.close();
         List<BookInfo> bookInfos = new ArrayList<>();
         while (resultSet.next()) {
             String name = Optional.ofNullable(resultSet.getString("name")).orElse("<неизвестно>");
@@ -116,6 +119,7 @@ public class BookDao {
                 .prepareStatement("delete from book where name = (?)");
         statement.setString(1, name);
         statement.executeUpdate();
+        statement.close();
     }
 
     public void updateBookName(String oldName, String newName) throws SQLException {
@@ -125,6 +129,7 @@ public class BookDao {
         statement.setString(1, newName);
         statement.setString(2, oldName);
         statement.executeUpdate();
+        statement.close();
         System.out.println("Добавлено.");
 
     }
@@ -141,17 +146,18 @@ public class BookDao {
                 System.out.println("Автора " + curAuthorName + " не существует! Прекращение операции...");
                 return;
             }
-                if (authorBookDao.bookContainsAuthor(book, author)) {
-                    System.out.println("Книга " + book.getName() + " уже имеет автора " + author.getName());
-                    continue;
-                } else {
-                    PreparedStatement authorSt = connection
-                            .prepareStatement("insert book_author(book_id, author_id) values (?, ?)");
-                    authorSt.setInt(1, book.getId());
-                    authorSt.setInt(2, author.getId());
-                    authorSt.executeUpdate();
-                    System.out.println("Добавлено.");
-                }
+            if (authorBookDao.bookContainsAuthor(book, author)) {
+                System.out.println("Книга " + book.getName() + " уже имеет автора " + author.getName());
+                continue;
+            } else {
+                PreparedStatement authorSt = connection
+                        .prepareStatement("insert book_author(book_id, author_id) values (?, ?)");
+                authorSt.setInt(1, book.getId());
+                authorSt.setInt(2, author.getId());
+                authorSt.executeUpdate();
+                authorSt.close();
+                System.out.println("Добавлено.");
+            }
 
         }
     }
@@ -172,6 +178,7 @@ public class BookDao {
         statement.setInt(1, book.getId());
         statement.setInt(2, publisher.getId());
         statement.executeUpdate();
+        statement.close();
         System.out.println("Добавлено.");
 
     }

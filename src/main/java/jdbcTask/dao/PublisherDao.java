@@ -37,6 +37,7 @@ public class PublisherDao {
                 .prepareStatement("select id from publisher where name = (?)");
         result.setString(1, name);
         ResultSet resultSet = result.executeQuery();
+        result.close();
         resultSet.next();
         int id = resultSet.getInt("id");
         return new Publisher(id, name);
@@ -50,11 +51,13 @@ public class PublisherDao {
         statement.setString(1, name);
         statement.setInt(2, book.getId());
         statement.executeUpdate();
+        statement.close();
 
         PreparedStatement result = connection
                 .prepareStatement("select id from publisher where name = (?)");
         result.setString(1, name);
         ResultSet resultSet = result.executeQuery();
+        result.close();
         resultSet.next();
         int id = resultSet.getInt("id");
         return new Publisher(id, name, book);
@@ -66,6 +69,7 @@ public class PublisherDao {
         try {
             PreparedStatement preparedStatement = connection.prepareStatement("select *from publisher");
             ResultSet resultSet = preparedStatement.executeQuery();
+            preparedStatement.close();
             while (resultSet.next()) {
                 int publisherId = resultSet.getInt("id");
                 String publisherName = resultSet.getString("name");
@@ -83,6 +87,7 @@ public class PublisherDao {
                 .prepareStatement("select *from publisher where name = (?)");
         statement.setString(1, name);
         ResultSet resultSet = statement.executeQuery();
+        statement.close();
         resultSet.next();
         int id = resultSet.getInt("id");
         String curName = resultSet.getString("name");
@@ -95,6 +100,7 @@ public class PublisherDao {
                 .prepareStatement("delete from publisher where name = (?)");
         statement.setString(1, name);
         statement.executeUpdate();
+        statement.close();
     }
 
     public void updatePublisherName(String oldName, String newName) throws SQLException {
@@ -103,6 +109,7 @@ public class PublisherDao {
         statement.setString(1, newName);
         statement.setString(2, oldName);
         statement.executeUpdate();
+        statement.close();
         System.out.println("Добавлено.");
     }
 
